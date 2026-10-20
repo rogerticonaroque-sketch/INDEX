@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluación: Procedimientos y Funciones - 5.° Secundaria</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col antialiased selection:bg-blue-500 selection:text-white">
+
+    <!-- Header Navigation Bar -->
+    <header class="gradient-bg text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-white/10 p-2 rounded-lg backdrop-blur-md">
+                    <i class="fa-solid fa-code text-2xl text-blue-200"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg leading-tight">Evaluación Diagnóstica</h1>
+                    <p class="text-xs text-blue-200">Procedimientos y Funciones · 5.º de Secundaria</p>
+                </div>
+            </div>
+            <div id="userInfoHeader" class="hidden flex items-center space-x-3 bg-white/10 px-3 py-1.5 rounded-full text-xs sm:text-sm backdrop-blur-md">
+                <i class="fa-solid fa-user-circle text-blue-200 text-lg"></i>
+                <span id="headerStudentName" class="font-semibold"></span>
+                <span class="bg-blue-900/50 px-2 py-0.5 rounded text-blue-200 text-xs" id="headerStudentRude"></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Dynamic Viewport -->
+    <main class="flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8">
+
+        <!-- 1. AUTHENTICATION & REGISTRATION SCREEN -->
+        <section id="authSection" class="max-w-md mx-auto bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden mt-6 transition-all duration-300">
+            <div class="p-6 sm:p-8">
+                <div class="text-center mb-6">
+                    <div class="inline-flex p-3 rounded-full bg-blue-50 text-blue-600 mb-3">
+                        <i class="fa-solid fa-id-card text-3xl"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-slate-800">Registro de Estudiante</h2>
+                    <p class="text-slate-500 text-sm mt-1">Ingresa tus datos para iniciar la evaluación de 45 preguntas.</p>
+                </div>
+
+                <form id="loginForm" class="space-y-4">
+                    <div>
+                        <label for="studentName" class="block text-xs font-bold uppercase text-slate-600 mb-1">Nombre Completo *</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                                <i class="fa-solid fa-user"></i>
+                            </span>
+                            <input type="text" id="studentName" required class="w-full pl-10 pr-3 py-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:bg-white transition-all outline-none" placeholder="Ej. Juan Pérez González">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="studentRude" class="block text-xs font-bold uppercase text-slate-600 mb-1">Código RUDE / C.I. *</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                                <i class="fa-solid fa-hashtag"></i>
+                            </span>
+                            <input type="text" id="studentRude" required class="w-full pl-10 pr-3 py-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:bg-white transition-all outline-none" placeholder="Ej. 819200321">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="accessPin" class="block text-xs font-bold uppercase text-slate-600 mb-1">PIN Secreto de Acceso (4 dígitos) *</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                                <i class="fa-solid fa-lock"></i>
+                            </span>
+                            <input type="password" id="accessPin" required maxlength="4" pattern="[0-9]{4}" class="w-full pl-10 pr-3 py-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:bg-white transition-all outline-none" placeholder="****">
+                        </div>
+                        <p class="text-[11px] text-slate-400 mt-1">Este PIN protegerá tu intento de evaluación contra modificaciones.</p>
+                    </div>
+
+                    <button type="submit" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg shadow-lg shadow-blue-500/30 transition-all flex items-center justify-center space-x-2">
+                        <span>Ingresar a la Evaluación</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </form>
+
+                <div class="mt-6 pt-6 border-t border-slate-100 flex justify-between items-center text-xs text-slate-500">
+                    <span>Acceso Docente / Administrador:</span>
+                    <button id="btnOpenAdmin" class="text-blue-600 hover:text-blue-800 font-bold underline">Panel de Notas</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. INSTRUCTIONS SCREEN -->
+        <section id="instructionsSection" class="hidden max-w-2xl mx-auto bg-white rounded-2xl shadow-xl border border-slate-100 p-6 sm:p-8 mt-6">
+            <div class="border-b border-slate-100 pb-4 mb-6 flex justify-between items-center">
+                <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                    <i class="fa-solid fa-clipboard-list text-blue-600"></i>
+                    Instrucciones de la Evaluación
+                </h2>
+                <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2.5 py-1 rounded-full">45 Puntos</span>
+            </div>
+
+            <div class="space-y-4 text-slate-600 text-sm leading-relaxed">
+                <div class="flex items-start gap-3 p-3 bg-slate-50 rounded-lg border border-slate-100">
+                    <i class="fa-solid fa-circle-check text-blue-500 mt-0.5"></i>
+                    <div><strong>Estructura:</strong> La prueba consta de 45 preguntas de opción múltiple de 1 punto cada una.</div>
+                </div>
+                <div class="flex items-start gap-3 p-3 bg-slate-50 rounded-lg border border-slate-100">
+                    <i class="fa-solid fa-clock text-amber-500 mt-0.5"></i>
+                    <div><strong>Tiempo Sugerido:</strong> Tienes 60 minutos para responder la totalidad de las preguntas.</div>
+                </div>
+                <div class="flex items-start gap-3 p-3 bg-slate-50 rounded-lg border border-slate-100">
+                    <i class="fa-solid fa-shield-halved text-emerald-500 mt-0.5"></i>
+                    <div><strong>Seguridad:</strong> El progreso se guarda automáticamente. Si la página se recarga, mantendrás tu intento activo.</div>
+                </div>
+            </div>
+
+            <div class="mt-8 flex justify-end space-x-3">
+                <button id="btnStartExam" class="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg shadow-lg shadow-emerald-500/30 transition-all flex items-center space-x-2">
+                    <i class="fa-solid fa-play"></i>
+                    <span>Iniciar Examen Ahora</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- 3. QUESTIONNAIRE EXAM VIEW -->
+        <section id="examSection" class="hidden grid grid-cols-1 lg:grid-cols-4 gap-6">
+            
+            <!-- Questions List (Left/Main Content) -->
+            <div class="lg:col-span-3 space-y-6">
+                <!-- Top Progress Bar Container -->
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <div class="w-full sm:w-2/3">
+                        <div class="flex justify-between text-xs font-bold text-slate-500 mb-1">
+                            <span>Progreso del Examen</span>
+                            <span id="progressText">0 / 45 Respondidas</span>
+                        </div>
+                        <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
+                            <div id="progressBar" class="bg-blue-600 h-full w-0 transition-all duration-300"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200">
+                        <i class="fa-solid fa-stopwatch text-slate-500"></i>
+                        <span id="timerDisplay" class="font-mono text-sm font-bold text-slate-700">00:60:00</span>
+                    </div>
+                </div>
+
+                <!-- Questions Container -->
+                <div id="questionsContainer" class="space-y-6"></div>
+
+                <!-- Submit Button Container -->
+                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 flex justify-between items-center">
+                    <p class="text-xs text-slate-500">Revisa minuciosamente tus respuestas antes de enviar.</p>
+                    <button id="btnSubmitExam" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg shadow-md transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-paper-plane"></i>
+                        <span>Finalizar y Entregar</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiz Navigation Grid (Right Sidebar) -->
+            <div class="lg:col-span-1">
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 sticky top-20">
+                    <h3 class="text-xs font-bold uppercase text-slate-500 mb-3">Navegador de Preguntas</h3>
+                    <div id="questionGridNav" class="grid grid-cols-5 gap-1.5 max-h-[60vh] overflow-y-auto custom-scrollbar p-1">
+                        <!-- Navigation buttons injected dynamically -->
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 flex justify-between text-[11px] text-slate-500">
+                        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-slate-200 inline-block"></span> Pendiente</span>
+                        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-blue-600 inline-block"></span> Respondiendo</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. RESULTS & SCORE REPORT SCREEN -->
+        <section id="resultsSection" class="hidden max-w-2xl mx-auto bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden mt-6">
+            <div class="bg-slate-900 text-white p-8 text-center relative overflow-hidden">
+                <div id="scoreBadge" class="inline-flex items-center justify-center w-24 h-24 rounded-full border-4 border-white/20 bg-white/10 backdrop-blur-md mb-4 text-3xl font-extrabold">
+                    0/45
+                </div>
+                <h2 id="resultTitle" class="text-2xl font-bold">¡Evaluación Completada!</h2>
+                <p id="resultSubtitle" class="text-slate-300 text-sm mt-1">Tus resultados han sido registrados con éxito en la base de datos.</p>
+            </div>
+
+            <div class="p-6 sm:p-8 space-y-6">
+                <!-- Student Summary Details -->
+                <div class="grid grid-cols-2 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-100 text-sm">
+                    <div>
+                        <span class="text-xs text-slate-400 block font-bold uppercase">Estudiante</span>
+                        <span id="resStudentName" class="font-semibold text-slate-800"></span>
+                    </div>
+                    <div>
+                        <span class="text-xs text-slate-400 block font-bold uppercase">Código RUDE / C.I.</span>
+                        <span id="resStudentRude" class="font-semibold text-slate-800"></span>
+                    </div>
+                    <div>
+                        <span class="text-xs text-slate-400 block font-bold uppercase">Fecha de Entrega</span>
+                        <span id="resTimestamp" class="font-semibold text-slate-800"></span>
+                    </div>
+                    <div>
+                        <span class="text-xs text-slate-400 block font-bold uppercase">Porcentaje</span>
+                        <span id="resPercentage" class="font-semibold text-slate-800"></span>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center">
+                    <button id="btnReviewAnswers" class="w-full py-3 bg-slate-800 hover:bg-slate-900 text-white font-bold rounded-lg shadow transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <span>Revisar Respuestas y Solucionario</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. ADMIN DATABASE PANEL -->
+        <section id="adminSection" class="hidden max-w-5xl mx-auto bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden mt-4">
+            <div class="bg-slate-900 text-white p-6 flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <i class="fa-solid fa-database text-blue-400 text-xl"></i>
+                    <div>
+                        <h2 class="text-lg font-bold">Base de Datos de Calificaciones</h2>
+                        <p class="text-xs text-slate-400">Registros almacenados localmente de las evaluaciones</p>
+                    </div>
+                </div>
+                <button id="btnCloseAdmin" class="text-slate-400 hover:text-white text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="p-6">
+                <!-- Controls -->
+                <div class="flex flex-col sm:flex-row justify-between gap-4 mb-6">
+                    <div class="relative flex-grow">
+                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                            <i class="fa-solid fa-search"></i>
+                        </span>
+                        <input type="text" id="adminSearchInput" class="w-full pl-10 pr-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Buscar por Nombre o RUDE...">
+                    </div>
+                    <div class="flex space-x-2">
+                        <button id="btnExportCSV" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm rounded-lg shadow flex items-center gap-2">
+                            <i class="fa-solid fa-file-excel"></i>
+                            <span>Exportar CSV</span>
+                        </button>
+                        <button id="btnClearDB" class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white font-semibold text-sm rounded-lg shadow flex items-center gap-2">
+                            <i class="fa-solid fa-trash-can"></i>
+                            <span>Borrar Todo</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Table -->
+                <div class="overflow-x-auto border border-slate-200 rounded-lg">
+                    <table class="w-full text-left text-sm">
+                        <thead class="bg-slate-100 text-slate-600 uppercase text-[11px] font-bold border-b border-slate-200">
+                            <tr>
+                                <th class="py-3 px-4">Estudiante</th>
+                                <th class="py-3 px-4">RUDE / C.I.</th>
+                                <th class="py-3 px-4">Fecha</th>
+                                <th class="py-3 px-4 text-center">Nota / 45</th>
+                                <th class="py-3 px-4 text-center">Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminRecordsTable" class="divide-y divide-slate-100">
+                            <!-- Injected rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ADMIN AUTHENTICATION MODAL -->
+    <div id="adminAuthModal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-slate-100">
+            <h3 class="text-lg font-bold text-slate-800 mb-2 flex items-center gap-2">
+                <i class="fa-solid fa-user-shield text-blue-600"></i> Acceso Docente
+            </h3>
+            <p class="text-xs text-slate-500 mb-4">Ingrese la contraseña maestra para administrar las calificaciones.</p>
+            
+            <form id="adminAuthForm" class="space-y-4">
+                <div>
+                    <input type="password" id="adminPassword" required class="w-full p-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Contraseña de administrador">
+                </div>
+                <div class="flex space-x-2">
+                    <button type="button" id="btnCancelAdminAuth" class="w-1/2 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-semibold rounded-lg">Cancelar</button>
+                    <button type="submit" class="w-1/2 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg">Acceder</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500 mt-auto">
+        <div class="max-w-7xl mx-auto px-4">
+            Sistemas Informáticos / Tecnología · 5.º de Secundaria · Plataforma Autónoma de Evaluación
+        </div>
+    </footer>
+
+    <!-- MAIN JAVASCRIPT LOGIC -->
+    <script>
+        /**
+         * 45-QUESTION MULTIPLE CHOICE QUESTION BANK
+         * Topic: Procedimientos y Funciones
+         */
+        const QUESTION_BANK = [
+            // Sección 1: Introducción y Procedimientos Básico (1-10)
+            {
+                id: 1,
+                question: "¿Cuál es el propósito principal de utilizar procedimientos y funciones en programación?",
+                options: ["Hacer que los programas se ejecuten más rápido en internet", "Organizar el código en bloques reutilizables y evitar la repetición", "Crear diseños visuales avanzados con HTML y CSS", "Aumentar el consumo de memoria del procesador"],
+                answer: 1
+            },
+            {
+                id: 2,
+                question: "En C++, ¿qué palabra clave se utiliza para definir un procedimiento que NO devuelve ningún valor?",
+                options: ["int", "string", "void", "float"],
+                answer: 2
+            },
+            {
+                id: 3,
+                question: "¿Qué sucede si defines un procedimiento en el código pero NUNCA lo llamas dentro del programa?",
+                options: ["El programa genera un error de compilación", "Sus instrucciones se ejecutan automáticamente al inicio", "Sus instrucciones NO se ejecutan", "El programa se bloquea al cerrar"],
+                answer: 2
+            },
+            {
+                id: 4,
+                question: "En la instrucción `#include <iostream>`, ¿qué función cumple este componente en C++?",
+                options: ["Permite definir procedimientos de tipo void", "Permite utilizar la entrada y salida de datos", "Limipia la memoria de la pantalla", "Devuelve un resultado entero"],
+                answer: 1
+            },
+            {
+                id: 5,
+                question: "¿Cuál es la sintaxis correcta para realizar la llamada a un procedimiento llamado `mostrarMenu()` sin parámetros?",
+                options: ["void mostrarMenu();", "call mostrarMenu;", "mostrarMenu();", "return mostrarMenu();"],
+                answer: 2
+            },
+            {
+                id: 6,
+                question: "Los datos que un procedimiento o función recibe en su definición para trabajar con información variante se denominan:",
+                options: ["Retornos", "Parámetros", "Librerías", "Condicionales"],
+                answer: 1
+            },
+            {
+                id: 7,
+                question: "En la llamada `saludarEstudiante(\"Carlos\");`, el texto `\"Carlos\"` actúa como un:",
+                options: ["Parámetro formal", "Argumento", "Tipo de retorno", "Procedimiento void"],
+                answer: 1
+            },
+            {
+                id: 8,
+                question: "¿Qué símbolo o delimitador se utiliza para señalar el inicio y fin del bloque de instrucciones de un procedimiento?",
+                options: ["Paréntesis ( )", "Llaves { }", "Corchetes [ ]", "Comillas \" \""],
+                answer: 1
+            },
+            {
+                id: 9,
+                question: "¿Qué instrucción finaliza correctamente la ejecución de la función principal `int main()` en C++?",
+                options: ["return 0;", "void 0;", "stop();", "exit void;"],
+                answer: 0
+            },
+            {
+                id: 10,
+                question: "¿Cuál de las siguientes tareas es ideal para ser implementada mediante un procedimiento de tipo `void`?",
+                options: ["Calcular la raíz cuadrada de un número", "Mostrar el encabezado o menú principal en pantalla", "Obtener el promedio ponderado de 5 notas", "Verificar si una clave es numéricamente correcta y retornar un valor"],
+                answer: 1
+            },
+
+            // Sección 2: Funciones con Retorno y Tipos de Datos (11-20)
+            {
+                id: 11,
+                question: "¿Qué diferencia fundamental existe entre una función con retorno y un procedimiento `void`?",
+                options: ["Los procedimientos reciben argumentos y las funciones no", "La función realiza una operación y devuelve un resultado mediante `return`", "Los procedimientos solo funcionan en JavaScript", "Las funciones no pueden incluir instrucciones condicionales"],
+                answer: 1
+            },
+            {
+                id: 12,
+                question: "Si una función en C++ tiene el encabezado `float calcularPromedio(float n1, float n2)`, ¿qué tipo de dato devuelve?",
+                options: ["Entero (int)", "Texto (string)", "Número decimal (float)", "Booleano (bool)"],
+                answer: 2
+            },
+            {
+                id: 13,
+                question: "Una función definida como `bool esMayor(int a, int b)` retornará valores del tipo:",
+                options: ["Cadenas de caracteres", "Verdadero o Falso (`true` / `false`)", "Números decimales de alta precisión", "Arreglos de datos numéricos"],
+                answer: 1
+            },
+            {
+                id: 14,
+                question: "Dada la función `int cuadrado(int n) { return n * n; }`, ¿qué valor devuelve la llamada `cuadrado(5)`?",
+                options: ["10", "25", "5", "0"],
+                answer: 1
+            },
+            {
+                id: 15,
+                question: "¿Qué ocurre con el valor devuelto por una función si el programa NO lo asigna a una variable ni lo imprime?",
+                options: ["El valor se pierde y no se aprovecha", "Genera un error de sintaxis", "Se guarda automáticamente en la base de datos", "Detiene la ejecución del procesador"],
+                answer: 0
+            },
+            {
+                id: 16,
+                question: "¿Cuál es la forma correcta de guardar en una variable el resultado de la función `sumar(8, 5)`?",
+                options: ["int resultado = sumar(8, 5);", "void resultado = sumar(8, 5);", "sumar(8, 5) = int resultado;", "int sumar(8, 5) -> resultado;"],
+                answer: 0
+            },
+            {
+                id: 17,
+                question: "Si deseas crear una función que devuelva el mensaje '5to de Secundaria', ¿qué tipo de retorno debe tener en C++?",
+                options: ["int", "char", "string", "bool"],
+                answer: 2
+            },
+            {
+                id: 18,
+                question: "En la función `float calcularPromedio(float n1, float n2, float n3)`, para evitar la división entera, es recomendable dividir entre:",
+                options: ["3", "3.0f", "tres", "void"],
+                answer: 1
+            },
+            {
+                id: 19,
+                question: "¿Qué sucede inmediatamente cuando se ejecuta la sentencia `return` dentro de una función?",
+                options: ["Se ejecuta el siguiente bucle", "La función finaliza su ejecución y devuelve el valor especificado", "Se limpia el texto del monitor", "Se le pide al usuario un nuevo parámetro"],
+                answer: 1
+            },
+            {
+                id: 20,
+                question: "En el ejemplo `bool aprobo(float nota) { return nota >= 51; }`, la llamada `aprobo(40)` devolverá:",
+                options: ["true", "false", "51", "40"],
+                answer: 1
+            },
+
+            // Sección 3: Análisis y Flujo de Ejecución (21-30)
+            {
+                id: 21,
+                question: "Analiza el siguiente flujo: 1) Inicio, 2) Llamada a `mostrarMenu()`, 3) Ejecución de instrucciones del menú. ¿Qué paso sigue?",
+                options: ["Reinicio del sistema operativo", "El programa continúa con la siguiente instrucción después de la llamada", "Cierre definitivo del programa", "Llamada automática a las funciones de resta"],
+                answer: 1
+            },
+            {
+                id: 22,
+                question: "Regla general para recordar: Si deseas calcular un descuento e impresionar el valor en una factura más adelante, debes usar:",
+                options: ["Un procedimiento `void` sin parámetros", "Una función con retorno de valor", "Una etiqueta HTML `<form>`", "Una variable global constante"],
+                answer: 1
+            },
+            {
+                id: 23,
+                question: "¿Qué permite la reutilización de código mediante funciones y procedimientos?",
+                options: ["Facilidad de lectura, mantenimiento y reducción de errores", "Aumento en el número de líneas de código escritas", "Obligatoriedad de usar bases de datos SQL", "Que el sistema no requiera diseño visual"],
+                answer: 0
+            },
+            {
+                id: 24,
+                question: "En un programa integrador, la función principal `main()` actúa como:",
+                options: ["El único bloque permitido para hacer operaciones matemáticas", "El coordinador que orquestará las llamadas a los procedimientos y funciones", "Un procedimiento de tipo `void` auxiliar", "Un archivo de hojas de estilo CSS"],
+                answer: 1
+            },
+            {
+                id: 25,
+                question: "Si se pasa como argumento un valor de `75` a una función `bool estaAprobado(float nota)` con criterio `nota >= 51`, la condición del `if` evaluará a:",
+                options: ["Verdadero (true)", "Falso (false)", "Error", "Null"],
+                answer: 0
+            },
+            {
+                id: 26,
+                question: "Técnicamente en lenguajes como C++, los procedimientos son implementados como:",
+                options: ["Módulos CSS", "Funciones cuyo tipo de retorno es `void`", "Bases de datos relacionales", "Comentarios de código de múltiples líneas"],
+                answer: 1
+            },
+            {
+                id: 27,
+                question: "Si ejecutas `cout << multiplicar(6, 4);`, el programa imprimirá directamente:",
+                options: ["multiplicar(6, 4)", "24", "64", "6 y 4"],
+                answer: 1
+            },
+            {
+                id: 28,
+                question: "¿Qué parámetro de tipo de datos utilizarías para recibir un valor de aprobación como `true` o `false`?",
+                options: ["int", "double", "bool", "string"],
+                answer: 2
+            },
+            {
+                id: 29,
+                question: "¿Cuántas veces se pueden invocar o llamar a una misma función dentro de un programa?",
+                options: ["Únicamente una vez", "Máximo 10 veces", "Las veces que sea necesario", "Solamente dentro del procedimiento void"],
+                answer: 2
+            },
+            {
+                id: 30,
+                question: "Los argumentos pasados en una llamada deben coincidir con los parámetros en:",
+                options: ["Número, orden y tipo de datos", "Solo en el nombre de la variable", "Únicamente en ser números enteros", "El color de fuente con el que se escriben"],
+                answer: 0
+            },
+
+            // Sección 4: Aplicación en Diseño y Programación Web (HTML, CSS, JS) (31-40)
+            {
+                id: 31,
+                question: "En el desarrollo web moderno, ¿cuál es la responsabilidad principal del lenguaje HTML?",
+                options: ["Controlar la interacción y cálculos complejos", "Proporcionar la estructura (títulos, formularios, botones)", "Aplicar colores y animaciones a los elementos", "Administrar las bases de datos en el servidor"],
+                answer: 1
+            },
+            {
+                id: 32,
+                question: "¿Qué tecnología web se encarga de controlar el diseño visual, colores, tipografías y adaptación a pantallas?",
+                options: ["HTML", "CSS", "JavaScript", "C++"],
+                answer: 1
+            },
+            {
+                id: 33,
+                question: "En desarrollo web, JavaScript se encarga principalmente de:",
+                options: ["Definir el marcado estructural", "El comportamiento, validación de formularios y cálculos dinámicos", "Crear hojas de estilo en cascada", "Instalar el sistema operativo del cliente"],
+                answer: 1
+            },
+            {
+                id: 34,
+                question: "¿Cómo se define una función equivalente en JavaScript?",
+                options: ["def nombreFuncion(parametros) {}", "function nombreFuncion(parametros) {}", "void function nombreFuncion() {}", "procedure nombreFuncion(parametros) {}"],
+                answer: 1
+            },
+            {
+                id: 35,
+                question: "Si una función en JavaScript realiza una acción pero no tiene una instrucción `return` explícita, ¿qué valor retorna técnicamente al ser evaluada?",
+                options: ["0", "null", "undefined", "false"],
+                answer: 2
+            },
+            {
+                id: 36,
+                question: "En JavaScript, ¿qué instrucción nos permite mostrar un mensaje flotante de alerta directamente en la ventana del navegador?",
+                options: ["console.log();", "alert();", "cout <<", "document.write();"],
+                answer: 1
+            },
+            {
+                id: 37,
+                question: "Para evitar que un formulario web recargue la página completa al presionar el botón de envío, utilizamos en JavaScript:",
+                options: ["evento.preventDefault();", "stop.reload();", "return false;", "console.clear();"],
+                answer: 0
+            },
+            {
+                id: 38,
+                question: "¿Qué método de JavaScript permite seleccionar un elemento del HTML mediante su identificador único?",
+                options: ["document.getElementById(\"id\");", "document.selectId(\"id\");", "HTML.getId(\"id\");", "window.findId(\"id\");"],
+                answer: 0
+            },
+            {
+                id: 39,
+                question: "Si capturamos el texto de un input numérico en JavaScript mediante `numero1.value`, ¿qué función utilizamos para convertirlo a tipo numérico?",
+                options: ["toString()", "Number()", "toHTML()", "parseVoid()"],
+                answer: 1
+            },
+            {
+                id: 40,
+                question: "En el script del proyecto web, la función `function sumar(a, b) { return a + b; }` cumple el rol de:",
+                options: ["Un procedimiento de interfaz", "Una función con retorno que realiza la operación aritmética", "Un validador de CSS", "Una etiqueta HTML de formulario"],
+                answer: 1
+            },
+
+            // Sección 5: Casos Prácticos y Proyectos Integadores (41-45)
+            {
+                id: 41,
+                question: "En una calculadora web, la función `mostrarResultado(valor)` que modifica el `textContent` de un párrafo sin retornar un dato se comporta conceptualmente como un:",
+                options: ["Procedimiento", "Algoritmo recursivo", "Tipo de dato float", "Formulario web"],
+                answer: 0
+            },
+            {
+                id: 42,
+                question: "En un sistema de inventario web, la tarea de 'calcular el valor total monetario de los productos' debe asignarse a:",
+                options: ["Un procedimiento de tipo `void`", "Una función que retorne el total calculado", "Una hoja de estilos CSS", "Una etiqueta `<label>`"],
+                answer: 1
+            },
+            {
+                id: 43,
+                question: "En un sistema de inventario web, la tarea de 'actualizar y renderizar la lista visual de productos en la pantalla' debe asignarse a:",
+                options: ["Un procedimiento o función de acción sin retorno", "Una función de cálculo aritmético", "Una librería de C++", "La etiqueta `<head>` de HTML"],
+                answer: 0
+            },
+            {
+                id: 44,
+                question: "Para verificar si las entradas de texto de un formulario son números finitos válidos en JS, la función de comprobación utilizada es:",
+                options: ["Number.isFinite(valor)", "String.isText(valor)", "Math.checkVoid(valor)", "HTML.isValid(valor)"],
+                answer: 0
+            },
+            {
+                id: 45,
+                question: "La modularización del código mediante procedimientos y funciones facilita el trabajo en proyectos como:",
+                options: ["Sistemas de registro de notas, inventarios y calculadoras web", "Únicamente archivos de texto plano sin formato", "Páginas exclusivamente estáticas sin JavaScript", "Documentos de impresión física sin lógica"],
+                answer: 0
+            }
+        ];
+
+        // MASTER ADMIN CREDENTIAL (HASHED/SECURED LOGIC)
+        const ADMIN_PASS_HASH = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"; // SHA-256 for "admin123"
+
+        // APP STATE MANAGEMENT
+        let currentStudent = null;
+        let examState = {
+            answers: {}, // questionId -> selectedOptionIndex
+            startTime: null,
+            timerInterval: null,
+            timeRemaining: 3600 // 60 mins in seconds
+        };
+
+        // DOM ELEMENTS
+        const authSection = document.getElementById('authSection');
+        const instructionsSection = document.getElementById('instructionsSection');
+        const examSection = document.getElementById('examSection');
+        const resultsSection = document.getElementById('resultsSection');
+        const adminSection = document.getElementById('adminSection');
+        const userInfoHeader = document.getElementById('userInfoHeader');
+        
+        const loginForm = document.getElementById('loginForm');
+        const questionsContainer = document.getElementById('questionsContainer');
+        const questionGridNav = document.getElementById('questionGridNav');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        const timerDisplay = document.getElementById('timerDisplay');
+
+        // INITIALIZATION
+        document.addEventListener('DOMContentLoaded', () => {
+            checkExistingSession();
+            setupEventListeners();
+        });
+
+        // EVENT LISTENERS SETUP
+        function setupEventListeners() {
+            loginForm.addEventListener('submit', handleLogin);
+            document.getElementById('btnStartExam').addEventListener('click', startExam);
+            document.getElementById('btnSubmitExam').addEventListener('click', confirmSubmitExam);
+            document.getElementById('btnReviewAnswers').addEventListener('click', reviewAnswers);
+            
+            // Admin Panel Listeners
+            document.getElementById('btnOpenAdmin').addEventListener('click', () => {
+                document.getElementById('adminAuthModal').classList.remove('hidden');
+            });
+            document.getElementById('btnCancelAdminAuth').addEventListener('click', () => {
+                document.getElementById('adminAuthModal').classList.add('hidden');
+            });
+            document.getElementById('adminAuthForm').addEventListener('submit', handleAdminAuth);
+            document.getElementById('btnCloseAdmin').addEventListener('click', () => {
+                adminSection.classList.add('hidden');
+            });
+            document.getElementById('btnExportCSV').addEventListener('click', exportToCSV);
+            document.getElementById('btnClearDB').addEventListener('click', clearDatabase);
+            document.getElementById('adminSearchInput').addEventListener('input', filterAdminRecords);
+        }
+
+        // SIMPLE SHA-256 HASH GENERATOR FOR SECURITY
+        async function sha256(message) {
+            const msgBuffer = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        // AUTHENTICATION & SESSION HANDLING
+        async function handleLogin(e) {
+            e.preventDefault();
+            const name = document.getElementById('studentName').value.trim();
+            const rude = document.getElementById('studentRude').value.trim();
+            const pin = document.getElementById('accessPin').value.trim();
+
+            if (!name || !rude || !pin) {
+                alert('Por favor, complete todos los campos obligatorios.');
+                return;
+            }
+
+            const pinHash = await sha256(pin);
+
+            currentStudent = {
+                name: name,
+                rude: rude,
+                pinHash: pinHash,
+                loginTime: new Date().toISOString()
+            };
+
+            // Check if student already completed exam
+            const records = getStoredRecords();
+            const existingRecord = records.find(r => r.rude === rude);
+
+            if (existingRecord) {
+                alert(`El estudiante con RUDE/C.I. ${rude} ya ha completado la evaluación anteriormente con una nota de ${existingRecord.score}/45.`);
+                showResultsView(existingRecord);
+                return;
+            }
+
+            // Save active session
+            localStorage.setItem('active_student_session', JSON.stringify(currentStudent));
+            updateHeader();
+
+            authSection.classList.add('hidden');
+            instructionsSection.classList.remove('hidden');
+        }
+
+        function checkExistingSession() {
+            const savedSession = localStorage.getItem('active_student_session');
+            const savedExamState = localStorage.getItem('active_exam_state');
+
+            if (savedSession) {
+                currentStudent = JSON.parse(savedSession);
+                updateHeader();
+
+                if (savedExamState) {
+                    examState = JSON.parse(savedExamState);
+                    authSection.classList.add('hidden');
+                    examSection.classList.remove('hidden');
+                    renderExam();
+                    startTimer();
+                } else {
+                    authSection.classList.add('hidden');
+                    instructionsSection.classList.remove('hidden');
+                }
+            }
+        }
+
+        function updateHeader() {
+            if (currentStudent) {
+                document.getElementById('headerStudentName').textContent = currentStudent.name;
+                document.getElementById('headerStudentRude').textContent = currentStudent.rude;
+                userInfoHeader.classList.remove('hidden');
+            } else {
+                userInfoHeader.classList.add('hidden');
+            }
+        }
+
+        // EXAM CORE LOGIC
+        function startExam() {
+            instructionsSection.classList.add('hidden');
+            examSection.classList.remove('hidden');
+
+            examState.startTime = new Date().toISOString();
+            saveExamState();
+
+            renderExam();
+            startTimer();
+        }
+
+        function renderExam() {
+            questionsContainer.innerHTML = '';
+            questionGridNav.innerHTML = '';
+
+            QUESTION_BANK.forEach((q, index) => {
+                // Render Question Box
+                const qBox = document.createElement('div');
+                qBox.id = `question-card-${q.id}`;
+                qBox.className = 'bg-white p-6 rounded-xl shadow-sm border border-slate-200 transition-all';
+                
+                const isAnswered = examState.answers[q.id] !== undefined;
+
+                qBox.innerHTML = `
+                    <div class="flex items-start justify-between gap-4 mb-4">
+                        <span class="inline-flex items-center justify-center bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full">
+                            Pregunta ${index + 1} de 45
+                        </span>
+                        <span class="text-xs text-slate-400 font-semibold">1 Punto</span>
+                    </div>
+                    <h3 class="text-slate-800 font-semibold text-base mb-4">${q.question}</h3>
+                    <div class="space-y-2.5">
+                        ${q.options.map((opt, optIndex) => {
+                            const checked = examState.answers[q.id] === optIndex ? 'checked' : '';
+                            const selectedBg = examState.answers[q.id] === optIndex ? 'bg-blue-50/80 border-blue-400' : 'bg-slate-50 border-slate-200 hover:bg-slate-100/80';
+                            return `
+                                <label class="flex items-center p-3 rounded-lg border ${selectedBg} cursor-pointer transition-all">
+                                    <input type="radio" name="question_${q.id}" value="${optIndex}" ${checked} 
+                                        onchange="selectOption(${q.id}, ${optIndex})" class="w-4 h-4 text-blue-600 focus:ring-blue-500">
+                                    <span class="ml-3 text-sm text-slate-700">${opt}</span>
+                                </label>
+                            `;
+                        }).join('')}
+                    </div>
+                `;
+                questionsContainer.appendChild(qBox);
+
+                // Render Sidebar Navigation Button
+                const navBtn = document.createElement('button');
+                navBtn.id = `nav-btn-${q.id}`;
+                navBtn.className = `w-full py-2 rounded text-xs font-bold border transition-all ${
+                    isAnswered ? 'bg-blue-600 text-white border-blue-600' : 'bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-200'
+                }`;
+                navBtn.textContent = index + 1;
+                navBtn.onclick = () => {
+                    document.getElementById(`question-card-${q.id}`).scrollIntoView({ behavior: 'smooth', block: 'center' });
+                };
+                questionGridNav.appendChild(navBtn);
+            });
+
+            updateProgressBar();
+        }
+
+        window.selectOption = function(questionId, optionIndex) {
+            examState.answers[questionId] = optionIndex;
+            saveExamState();
+
+            // Update option styles locally
+            const qBox = document.getElementById(`question-card-${questionId}`);
+            const labels = qBox.querySelectorAll('label');
+            labels.forEach((lbl, idx) => {
+                if (idx === optionIndex) {
+                    lbl.className = 'flex items-center p-3 rounded-lg border bg-blue-50/80 border-blue-400 cursor-pointer transition-all';
+                } else {
+                    lbl.className = 'flex items-center p-3 rounded-lg border bg-slate-50 border-slate-200 hover:bg-slate-100/80 cursor-pointer transition-all';
+                }
+            });
+
+            // Update nav button
+            const navBtn = document.getElementById(`nav-btn-${questionId}`);
+            if (navBtn) {
+                navBtn.className = 'w-full py-2 rounded text-xs font-bold border transition-all bg-blue-600 text-white border-blue-600';
+            }
+
+            updateProgressBar();
+        };
+
+        function updateProgressBar() {
+            const answeredCount = Object.keys(examState.answers).length;
+            const percentage = (answeredCount / 45) * 100;
+            progressBar.style.width = `${percentage}%`;
+            progressText.textContent = `${answeredCount} / 45 Respondidas`;
+        }
+
+        function saveExamState() {
+            localStorage.setItem('active_exam_state', JSON.stringify(examState));
+        }
+
+        // TIMER SYSTEM
+        function startTimer() {
+            clearInterval(examState.timerInterval);
+            examState.timerInterval = setInterval(() => {
+                if (examState.timeRemaining <= 0) {
+                    clearInterval(examState.timerInterval);
+                    alert('El tiempo límite para completar la evaluación ha finalizado.');
+                    submitExam();
+                } else {
+                    examState.timeRemaining--;
+                    formatTimerDisplay(examState.timeRemaining);
+                }
+            }, 1000);
+        }
+
+        function formatTimerDisplay(seconds) {
+            const hrs = Math.floor(seconds / 3600);
+            const mins = Math.floor((seconds % 3600) / 60);
+            const secs = seconds % 60;
+            timerDisplay.textContent = `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // EXAM SUBMISSION & EVALUATION
+        function confirmSubmitExam() {
+            const answeredCount = Object.keys(examState.answers).length;
+            if (answeredCount < 45) {
+                if (!confirm(`Has respondido ${answeredCount} de 45 preguntas. ¿Estás seguro de que deseas finalizar la evaluación?`)) {
+                    return;
+                }
+            } else {
+                if (!confirm('¿Deseas finalizar y enviar tu evaluación?')) {
+                    return;
+                }
+            }
+            submitExam();
+        }
+
+        function submitExam() {
+            clearInterval(examState.timerInterval);
+
+            // Grade Exam
+            let score = 0;
+            QUESTION_BANK.forEach(q => {
+                if (examState.answers[q.id] === q.answer) {
+                    score++;
+                }
+            });
+
+            const record = {
+                studentName: currentStudent.name,
+                rude: currentStudent.rude,
+                score: score,
+                total: 45,
+                percentage: ((score / 45) * 100).toFixed(1),
+                answers: examState.answers,
+                timestamp: new Date().toLocaleString('es-BO')
+            };
+
+            // Save Record to Local Storage Database
+            saveRecordToDatabase(record);
+
+            // Clear Active Exam Storage
+            localStorage.removeItem('active_student_session');
+            localStorage.removeItem('active_exam_state');
+
+            // Render Results View
+            showResultsView(record);
+        }
+
+        function showResultsView(record) {
+            examSection.classList.add('hidden');
+            authSection.classList.add('hidden');
+            instructionsSection.classList.add('hidden');
+            resultsSection.classList.remove('hidden');
+
+            document.getElementById('scoreBadge').textContent = `${record.score}/45`;
+            document.getElementById('resStudentName').textContent = record.studentName;
+            document.getElementById('resStudentRude').textContent = record.rude;
+            document.getElementById('resTimestamp').textContent = record.timestamp;
+            document.getElementById('resPercentage').textContent = `${record.percentage}%`;
+
+            if (record.score >= 23) {
+                document.getElementById('resultTitle').textContent = "¡Felicitaciones! Has Aprobado";
+                document.getElementById('scoreBadge').className = "inline-flex items-center justify-center w-24 h-24 rounded-full border-4 border-emerald-400 bg-emerald-500/20 text-emerald-300 text-3xl font-extrabold mb-4";
+            } else {
+                document.getElementById('resultTitle').textContent = "Evaluación Concluida";
+                document.getElementById('scoreBadge').className = "inline-flex items-center justify-center w-24 h-24 rounded-full border-4 border-rose-400 bg-rose-500/20 text-rose-300 text-3xl font-extrabold mb-4";
+            }
+        }
+
+        // REVIEW SOLUTIONARY
+        function reviewAnswers() {
+            resultsSection.classList.add('hidden');
+            examSection.classList.remove('hidden');
+
+            // Disable submit button and inputs
+            document.getElementById('btnSubmitExam').parentElement.classList.add('hidden');
+            
+            QUESTION_BANK.forEach((q) => {
+                const qBox = document.getElementById(`question-card-${q.id}`);
+                if (!qBox) return;
+
+                const studentAns = examState.answers[q.id];
+                const correctAns = q.answer;
+
+                const labels = qBox.querySelectorAll('label');
+                labels.forEach((lbl, idx) => {
+                    const input = lbl.querySelector('input');
+                    input.disabled = true;
+
+                    if (idx === correctAns) {
+                        lbl.className = 'flex items-center p-3 rounded-lg border bg-emerald-100 border-emerald-500 font-semibold text-emerald-900';
+                    } else if (idx === studentAns && studentAns !== correctAns) {
+                        lbl.className = 'flex items-center p-3 rounded-lg border bg-rose-100 border-rose-500 text-rose-900';
+                    } else {
+                        lbl.className = 'flex items-center p-3 rounded-lg border bg-slate-50 border-slate-200 opacity-60';
+                    }
+                });
+            });
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // DATABASE / LOCAL STORAGE MANAGEMENT
+        function getStoredRecords() {
+            const records = localStorage.getItem('evaluation_database_records');
+            return records ? JSON.parse(records) : [];
+        }
+
+        function saveRecordToDatabase(record) {
+            const records = getStoredRecords();
+            records.push(record);
+            localStorage.setItem('evaluation_database_records', JSON.stringify(records));
+        }
+
+        // ADMIN PANEL FUNCTIONS
+        async function handleAdminAuth(e) {
+            e.preventDefault();
+            const pass = document.getElementById('adminPassword').value;
+            const hash = await sha256(pass);
+
+            if (hash === ADMIN_PASS_HASH) {
+                document.getElementById('adminAuthModal').classList.add('hidden');
+                document.getElementById('adminPassword').value = '';
+                openAdminPanel();
+            } else {
+                alert('Contraseña de administrador incorrecta.');
+            }
+        }
+
+        function openAdminPanel() {
+            adminSection.classList.remove('hidden');
+            renderAdminRecords();
+        }
+
+        function renderAdminRecords(filterText = '') {
+            const records = getStoredRecords();
+            const tbody = document.getElementById('adminRecordsTable');
+            tbody.innerHTML = '';
+
+            const filtered = records.filter(r => 
+                r.studentName.toLowerCase().includes(filterText.toLowerCase()) ||
+                r.rude.toLowerCase().includes(filterText.toLowerCase())
+            );
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="py-6 text-center text-slate-400 italic">No existen registros almacenados.</td></tr>`;
+                return;
+            }
+
+            filtered.forEach(r => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-50 transition-all';
+                
+                const isPassed = r.score >= 23;
+                const statusBadge = isPassed 
+                    ? `<span class="px-2 py-1 bg-emerald-100 text-emerald-800 text-xs font-bold rounded-full">Aprobado</span>`
+                    : `<span class="px-2 py-1 bg-rose-100 text-rose-800 text-xs font-bold rounded-full">Reprobado</span>`;
+
+                tr.innerHTML = `
+                    <td class="py-3 px-4 font-semibold text-slate-800">${r.studentName}</td>
+                    <td class="py-3 px-4 text-slate-600">${r.rude}</td>
+                    <td class="py-3 px-4 text-slate-500 text-xs">${r.timestamp}</td>
+                    <td class="py-3 px-4 text-center font-bold">${r.score} / 45</td>
+                    <td class="py-3 px-4 text-center">${statusBadge}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function filterAdminRecords(e) {
+            renderAdminRecords(e.target.value);
+        }
+
+        function exportToCSV() {
+            const records = getStoredRecords();
+            if (records.length === 0) {
+                alert('No hay datos para exportar.');
+                return;
+            }
+
+            let csvContent = "data:text/csv;charset=utf-8,Estudiante,RUDE,Fecha,Nota_45,Porcentaje,Estado\n";
+            records.forEach(r => {
+                const status = r.score >= 23 ? "Aprobado" : "Reprobado";
+                csvContent += `"${r.studentName}","${r.rude}","${r.timestamp}",${r.score},${r.percentage}%,${status}\n`;
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `Notas_Procedimientos_Funciones_${new Date().toISOString().slice(0,10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function clearDatabase() {
+            if (confirm('¿ATENCIÓN: Está seguro de que desea eliminar permanentemente todas las notas de la base de datos local?')) {
+                localStorage.removeItem('evaluation_database_records');
+                renderAdminRecords();
+            }
+        }
+    </script>
+</body>
+</html>
